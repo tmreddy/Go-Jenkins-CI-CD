@@ -4,7 +4,7 @@ pipeline {
     environment {
         APP_NAME = "go-jenkins-CI-CD-app"
         DOCKER_REGISTRY = "docker.io"                      // change if using another registry
-        DOCKER_REPO = "https://hub.docker.com/repositories/tmreddy/${APP_NAME}"           // replace with your DockerHub/org
+        DOCKER_REPO = "tmreddy/${APP_NAME}"           // replace with your DockerHub/org
         CONTAINER_NAME = "go-jenkins-CI-CD-app"
         APP_PORT = "8080"                                  // app exposed port
     }
