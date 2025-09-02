@@ -56,17 +56,18 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Stop & remove existing container if running
-                    sh '''
-                        docker ps -q --filter "name=$CONTAINER_NAME" | grep -q . && \
-                        docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME || true
-                    '''
+                    // Stop and remove container if it exists
+                    sh """
+                        if [ \$(docker ps -aq -f name=${CONTAINER_NAME}) ]; then
+                            docker rm -f ${CONTAINER_NAME}
+                        fi
+                    """
         
-                    // Always pull latest tagged image from Docker Hub
-                    sh '''
-                        docker pull $DOCKER_IMAGE
-                        docker run -d --name $CONTAINER_NAME -p $APP_PORT:8080 $DOCKER_IMAGE
-                    '''
+                    // Run new container, map host port $APP_PORT to container port 8080
+                    sh """
+                        docker pull ${DOCKER_IMAGE}
+                        docker run -d --name ${CONTAINER_NAME} -p ${APP_PORT}:8080 ${DOCKER_IMAGE}
+                    """
                 }
             }
         }
