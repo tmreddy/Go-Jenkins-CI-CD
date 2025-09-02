@@ -77,7 +77,7 @@ pipeline {
         stage('Smoke Test') {
             steps {
                 script {
-                    sleep 5
+                    sleep 10
                     sh """
                         curl -f http://localhost:${APP_PORT}/health || (echo 'App failed health check' && exit 1)
                     """
