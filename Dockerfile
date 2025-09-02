@@ -8,6 +8,9 @@ RUN go mod download
 
 COPY . .
 
+# Build static binary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o go-jenkins-webhook .
+
 # ✅ Run unit tests here
 RUN go test ./...
 
