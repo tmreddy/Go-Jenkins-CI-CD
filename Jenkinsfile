@@ -68,7 +68,7 @@ pipeline {
         
                     // Run the container mapping host $APP_PORT to container's 8080
                     sh """
-                        docker run -d --name ${CONTAINER_NAME} -p ${APP_PORT}:8080 ${DOCKER_IMAGE}
+                        docker run -d --name ${CONTAINER_NAME} -p ${APP_PORT}:${APP_PORT} ${DOCKER_IMAGE}
                     """
                 }
             }
