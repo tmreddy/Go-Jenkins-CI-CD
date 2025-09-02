@@ -3,25 +3,28 @@ FROM golang:1.24.3 AS builder
 
 WORKDIR /app
 
-COPY go.mod ./
+# Download dependencies first (better caching)
+COPY go.mod  ./
 RUN go mod download
 
+# Copy source
 COPY . .
 
-# Build static binary
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o go-jenkins-webhook .
+# Build the Go app as a static binary for Linux amd64
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o go-jenkins-ci-cd main.go
+
 
 # ✅ Run unit tests here
 RUN go test ./...
 
-# Build the Go app
-RUN go build -o go-jenkins-webhook
 
 # ---- Runtime Stage ----
 FROM debian:bullseye-slim
 
 WORKDIR /app
 
-COPY --from=builder /app/go-jenkins-webhook .
+# Copy compiled binary
+COPY --from=builder /app/go-jenkins-ci-cd .
 
-CMD ["./go-jenkins-webhook"]
+# Run app on container start
+CMD ["./go-jenkins-ci-cd"]
