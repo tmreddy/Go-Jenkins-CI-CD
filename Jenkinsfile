@@ -53,7 +53,7 @@ pipeline {
         //     }
         // }
 
-        stage('Deploy') {
+        sstage('Deploy') {
             steps {
                 script {
                     // Force remove any existing container
@@ -66,13 +66,14 @@ pipeline {
                         docker pull ${DOCKER_IMAGE}
                     """
         
-                    // Run the container mapping host $APP_PORT to container's 8080
+                    // Run the container mapping host 8000 -> container 8000
                     sh """
                         docker run -d --name ${CONTAINER_NAME} -p ${APP_PORT}:${APP_PORT} ${DOCKER_IMAGE}
                     """
                 }
             }
         }
+
 
         stage('Smoke Test') {
             steps {
