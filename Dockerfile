@@ -26,5 +26,7 @@ WORKDIR /app
 # Copy compiled binary
 COPY --from=builder /app/go-jenkins-ci-cd .
 
+EXPOSE 8000
+
 # Run app on container start
 CMD ["./go-jenkins-ci-cd"]
