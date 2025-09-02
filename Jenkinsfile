@@ -57,13 +57,16 @@ pipeline {
             steps {
                 script {
                     // Stop & remove existing container if running
-                    sh '''docker ps -q --filter name=${CONTAINER_NAME} | grep -q . && docker stop ${CONTAINER_NAME} && docker rm ${CONTAINER_NAME} || true'''
-
+                    sh '''
+                        docker ps -q --filter "name=$CONTAINER_NAME" | grep -q . && \
+                        docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME || true
+                    '''
+        
                     // Always pull latest tagged image from Docker Hub
-                    sh """
-                        docker pull ${DOCKER_IMAGE}
-                        docker run -d --name ${CONTAINER_NAME} -p ${APP_PORT}:${APP_PORT} ${DOCKER_IMAGE}
-                    """
+                    sh '''
+                        docker pull $DOCKER_IMAGE
+                        docker run -d --name $CONTAINER_NAME -p $APP_PORT:8080 $DOCKER_IMAGE
+                    '''
                 }
             }
         }
