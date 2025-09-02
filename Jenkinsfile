@@ -34,12 +34,13 @@ pipeline {
         stage('Docker Login & Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh """
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin ${DOCKER_REGISTRY}
-                        docker push ${DOCKER_IMAGE}
-                        docker push ${LATEST_IMAGE}
-                    """
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker.io
+                        docker push $DOCKER_IMAGE
+                        docker push $LATEST_IMAGE
+                    '''
                 }
+
             }
         }
 
