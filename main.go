@@ -22,6 +22,6 @@ func main() {
 	http.HandleFunc("/", helloHandler)
 	http.HandleFunc("/jenkins", helloJenkinsHandler)
 	http.HandleFunc("/health", healthCheckHandler)
-	fmt.Println("Server starting on port 8080...")
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Server starting on port 8000...")
+	http.ListenAndServe(":8000", nil)
 }
