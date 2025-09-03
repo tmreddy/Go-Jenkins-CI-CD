@@ -53,7 +53,7 @@ pipeline {
         //     }
         // }
 
-        sstage('Deploy') {
+        stage('Deploy') {
             steps {
                 script {
                     // Force remove any existing container
