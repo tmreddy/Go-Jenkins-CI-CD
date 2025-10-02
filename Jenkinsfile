@@ -44,14 +44,14 @@ pipeline {
             }
         }
 
-        // stage('Run Unit Tests') {
-        //     steps {
-        //         script {
-        //             // Run Go tests inside container
-        //             sh "docker run --rm ${DOCKER_IMAGE} go test ./..."
-        //         }
-        //     }
-        // }
+        stage('Run Unit Tests') {
+             steps {
+                 script {
+                     // Run Go tests inside container
+                     sh "docker run --rm ${DOCKER_IMAGE} go test ./..."
+                 }
+             }
+        }
 
         stage('Deploy') {
             steps {
